@@ -1,4 +1,5 @@
 config = {
+    "H": 10,
     "sim_f": 200,  # [Hz]
     "control_f": 50,  # [Hz]
     "command": [0, 0, 0],  # [vy, vy, yaw_rate]
@@ -9,6 +10,7 @@ config = {
     "lateral_friction": 0.8,
     "rolling_friction": 0.6,
     "init_duration_s": 5,
+    "sim_duration_s": 5,
     "q_stance": {
         "FR_hip_joint": -0.1,
         "FL_hip_joint": 0.1,

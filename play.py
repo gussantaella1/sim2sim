@@ -4,12 +4,12 @@ from env import Env
 from plot import Logger
 from utils import list_to_dict
 
-agent = Agent("models/model_94000.onnx", H=10)
+agent = Agent("models/model_94000.onnx", H=config["H"])
 env = Env(cfg=config)
 log = Logger(Ka=config["Ka"], f=config["control_f"])
 
-sim_time = 5  # [s]
-action = [0 for _ in range(12)]
+sim_time = config["sim_duration_s"]
+action = [0 for _ in range(env.n)]
 for _ in range(sim_time * env.control_f):
     obs = env.step(action)
     # action = agent(obs)
