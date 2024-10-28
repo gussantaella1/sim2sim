@@ -24,8 +24,10 @@ class Agent:
 
     def __call__(self, obs: list) -> np.ndarray:
         obs_hist = self.get_flat_obs(obs)
-        action = self.ort_session.run(None, {"obs": obs_hist})[0].flatten()
-        return action.tolist()
+        outputs = self.ort_session.run(None, {"obs": obs_hist})
+        action = outputs[0].flatten()
+        estimate = outputs[1].flatten()
+        return action.tolist(), estimate.tolist()
 
     def get_flat_obs(self, obs) -> np.ndarray:
         idx = 0
@@ -34,8 +36,10 @@ class Agent:
             ob, size = self.obs_list[i], self.sizes[i]
             ob = np.roll(ob, 1, axis=1)
             ob[:, 0] = obs[idx:idx + size]
-            ob_flat = ob.copy().reshape((1, -1))
+            ob_flat = ob.copy().transpose().reshape((1, -1))
             obs_flat[:, idx * self.H:(idx + size) * self.H] = ob_flat
             self.obs_list[i] = ob
             idx += size
+        # print(obs_flat[:, 60:180])
         return np.float32(obs_flat)
+        # np.float32(np.random.randn(*obs_flat.shape))

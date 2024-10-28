@@ -36,6 +36,20 @@ class Logger:
             "RR_calf_joint": [],
             "RL_calf_joint": [],
         }
+        self.q_des = {
+            "FR_hip_joint": [],
+            "FL_hip_joint": [],
+            "RR_hip_joint": [],
+            "RL_hip_joint": [],
+            "FR_thigh_joint": [],
+            "FL_thigh_joint": [],
+            "RR_thigh_joint": [],
+            "RL_thigh_joint": [],
+            "FR_calf_joint": [],
+            "FL_calf_joint": [],
+            "RR_calf_joint": [],
+            "RL_calf_joint": [],
+        }
         # Joint Velocity
         self.dq = {
             "FR_hip_joint": [],
@@ -66,11 +80,25 @@ class Logger:
             "RR_calf_joint": [],
             "RL_calf_joint": [],
         }
+        self.torque = {
+            "FR_hip_joint": [],
+            "FL_hip_joint": [],
+            "RR_hip_joint": [],
+            "RL_hip_joint": [],
+            "FR_thigh_joint": [],
+            "FL_thigh_joint": [],
+            "RR_thigh_joint": [],
+            "RL_thigh_joint": [],
+            "FR_calf_joint": [],
+            "FL_calf_joint": [],
+            "RR_calf_joint": [],
+            "RL_calf_joint": [],
+        }
 
         # Plotters
         subplot_kw_args = {
             "sharex": True,
-            "sharey": True,
+            # "sharey": True,
         }
         # Projected Gravity
         self.fig_proj_g, self.ax_proj_g = plt.subplots()
@@ -82,6 +110,8 @@ class Logger:
         self.fig_dq, self.ax_dq = plt.subplots(3, 1, **subplot_kw_args)
         # Action
         self.fig_action, self.ax_action = plt.subplots(3, 1, **subplot_kw_args)
+        # Torque
+        self.fig_torque, self.ax_torque = plt.subplots(3, 1, **subplot_kw_args)
 
     def log(
             self,
@@ -91,6 +121,8 @@ class Logger:
             dq: dict,
             action: dict,
             q_offset: dict,
+            torque: dict,
+            q_des: dict,
     ) -> None:
         # Time
         self.t.append(self.counter * self.dt)
@@ -106,14 +138,25 @@ class Logger:
         # Joint Position
         for k, v in q.items():
             self.q[k].append(v + q_offset[k])
+        for k, v in q_des.items():
+            self.q_des[k].append(v)
         # Joint Velocity
         for k, v in dq.items():
             self.dq[k].append(v)
         # Action
         for k, v in action.items():
             self.action[k].append(self.Ka * v)
+        # Torque
+        for k, v in torque.items():
+            self.torque[k].append(v)
 
     def plot(self) -> None:
+        styles = {
+            "FR": "b",  # "tab:blue",
+            "FL": "g",  # "tab:orange",
+            "RR": "r",  # "tab:green",
+            "RL": "m",  # "tab:red",
+        }
         # Projected Gravity
         for k, v in self.proj_g.items():
             self.ax_proj_g.plot(self.t, v, label=k)
@@ -130,44 +173,74 @@ class Logger:
         self.ax_vel_cmd.set_xlabel("Time [s]")
         # Joint Position
         for k, v in self.q.items():
+            c = styles[k.split("_")[0]]
             if "hip" in k:
-                self.ax_q[0].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_q[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_q[0].legend(loc="upper right")
             elif "thigh" in k:
-                self.ax_q[1].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_q[1].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_q[1].legend(loc="upper right")
             elif "calf" in k:
-                self.ax_q[2].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_q[2].plot(self.t, v, c, label=k.split("_joint")[0])
+                self.ax_q[2].legend(loc="upper right")
+        # Desired
+        for k, v in self.q_des.items():
+            c = styles[k.split("_")[0]] + "--"
+            if "hip" in k:
+                self.ax_q[0].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
+                self.ax_q[0].legend(loc="upper right")
+            elif "thigh" in k:
+                self.ax_q[1].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
+                self.ax_q[1].legend(loc="upper right")
+            elif "calf" in k:
+                self.ax_q[2].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
                 self.ax_q[2].legend(loc="upper right")
         self.ax_q[0].set_title("Joint Position")
         self.ax_q[1].set_ylabel("Angle [rad]")
         self.ax_q[2].set_xlabel("Time [s]")
         # Joint Velocity
         for k, v in self.dq.items():
+            c = styles[k.split("_")[0]]
             if "hip" in k:
-                self.ax_dq[0].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_dq[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_dq[0].legend(loc="upper right")
             elif "thigh" in k:
-                self.ax_dq[1].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_dq[1].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_dq[1].legend(loc="upper right")
             elif "calf" in k:
-                self.ax_dq[2].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_dq[2].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_dq[2].legend(loc="upper right")
         self.ax_dq[0].set_title("Joint Velocity")
         self.ax_dq[1].set_ylabel("Angular Rate [rad/s]")
         self.ax_dq[2].set_xlabel("Time [s]")
         # Action
         for k, v in self.action.items():
+            c = styles[k.split("_")[0]]
             if "hip" in k:
-                self.ax_action[0].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_action[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_action[0].legend(loc="upper right")
             elif "thigh" in k:
-                self.ax_action[1].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_action[1].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_action[1].legend(loc="upper right")
             elif "calf" in k:
-                self.ax_action[2].plot(self.t, v, label=k.split("_joint")[0])
+                self.ax_action[2].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_action[2].legend(loc="upper right")
         self.ax_action[0].set_title("Action")
         self.ax_action[1].set_ylabel("Angle Offset [rad]")
         self.ax_action[2].set_xlabel("Time [s]")
+        # Torque
+        for k, v in self.torque.items():
+            c = styles[k.split("_")[0]]
+            if "hip" in k:
+                self.ax_torque[0].plot(self.t, v, c, label=k.split("_joint")[0])
+                self.ax_torque[0].legend(loc="upper right")
+            elif "thigh" in k:
+                self.ax_torque[1].plot(self.t, v, c, label=k.split("_joint")[0])
+                self.ax_torque[1].legend(loc="upper right")
+            elif "calf" in k:
+                self.ax_torque[2].plot(self.t, v, c, label=k.split("_joint")[0])
+                self.ax_torque[2].legend(loc="upper right")
+        self.ax_torque[0].set_title("Applied Torque")
+        self.ax_torque[1].set_ylabel("Torque [Nm]")
+        self.ax_torque[2].set_xlabel("Time [s]")
         plt.show()

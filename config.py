@@ -1,16 +1,46 @@
 config = {
     "H": 10,
-    "sim_f": 200,  # [Hz]
+    "sim_f": 2000,  # [Hz]
     "control_f": 50,  # [Hz]
     "command": [0, 0, 0],  # [vy, vy, yaw_rate]
-    "Kp": 0.01,
-    "Kd": 0.0001,
+    "Kp": 30,
+    "Kd": 0.5,
     "Ka": 0.25,
     "tau_lim": 50,  # [Nm]
-    "lateral_friction": 0.8,
-    "rolling_friction": 0.6,
-    "init_duration_s": 5,
+    "saturation_lim": 50,
+    "vel_lim": 30,
+    "lateral_friction": 1, #0.8,
+    "rolling_friction": 1, #0.6,
+    "init_duration_s": 1,
     "sim_duration_s": 5,
+    "Kp_joints": {
+        "FR_hip_joint": 250,
+        "FL_hip_joint": 150,
+        "RR_hip_joint": 150,
+        "RL_hip_joint": 250,
+        "FR_thigh_joint": 250,
+        "FL_thigh_joint": 150,
+        "RR_thigh_joint": 400,
+        "RL_thigh_joint": 400,
+        "FR_calf_joint": 250,
+        "FL_calf_joint": 250,
+        "RR_calf_joint": 250,
+        "RL_calf_joint": 250,
+    },
+    "Kd_joints": {
+        "FR_hip_joint": 1.5,
+        "FL_hip_joint": 1.5,
+        "RR_hip_joint": 1.5,
+        "RL_hip_joint": 1.5,
+        "FR_thigh_joint": 1.5,
+        "FL_thigh_joint": 1.5,
+        "RR_thigh_joint": 1.5,
+        "RL_thigh_joint": 1.5,
+        "FR_calf_joint": 1.5,
+        "FL_calf_joint": 1.5,
+        "RR_calf_joint": 1.5,
+        "RL_calf_joint": 1.5,
+    },
     "q_stance": {
         "FR_hip_joint": -0.1,
         "FL_hip_joint": 0.1,
