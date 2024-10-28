@@ -56,13 +56,13 @@ class Env:
         self.vel_lim = cfg["vel_lim"]
         self.saturation_lim = cfg["saturation_lim"]
         self.tau_lim = cfg["tau_lim"]
-        init_pose = [0.0, 0.0, 0.4]
+        init_pose = [0.0, 0.0, 0.5]
         init_ori = p.getQuaternionFromEuler([0.0, 0.0, 0.0])
         flags = p.URDF_MERGE_FIXED_LINKS  # \
         #     | p.URDF_USE_SELF_COLLISION  # \
         #   | p.URDF_USE_SELF_COLLISION_EXCLUDE_ALL_PARENTS
         self.robot = self.client.loadURDF(
-            "robots/go1/go1.urdf", init_pose, init_ori, flags=flags
+            "robots/spot/spot.urdf", init_pose, init_ori, flags=flags
         )
         self.n = self.client.getNumJoints(self.robot)
         self.joints = {}
@@ -97,6 +97,8 @@ class Env:
         self.links["trunk"] = -1
         self.joints_isaac = cfg["isaac_joint_order"]
         self.q_init = cfg["q_stance"]
+        #print(self.q_init.keys())
+        #print(self.joints.keys())
         self.q_init_arr = np.array(dict_to_list(self.q_init, self.joints))
         self.dq_init_arr = np.array([0 for _ in range(self.n)])
         self.tau_lim_arr = np.array([self.tau_lim for _ in range(self.n)])
@@ -203,7 +205,7 @@ class Env:
                 forces=torque
             )
             mean_torque += torque
-            print("position error: ", q_err)
+            #print("position error: ", q_err)
             # print("velocity error: ", dq_err)
             # print("torque: ", torque)
             # print()
