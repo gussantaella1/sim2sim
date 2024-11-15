@@ -24,7 +24,9 @@ class Agent:
 
     def __call__(self, obs: list) -> np.ndarray:
         obs_hist = self.get_flat_obs(obs)
-        outputs = self.ort_session.run(None, {"obs": obs_hist})
+        #OG:
+        #outputs = self.ort_session.run(None, {"obs": obs_hist})
+        outputs = self.ort_session.run(None, {"state_distory": obs_hist})
         action = outputs[0].flatten()
         estimate = outputs[1].flatten()
         return action.tolist(), estimate.tolist()
