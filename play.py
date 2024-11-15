@@ -4,7 +4,7 @@ from env import Env
 from plot import Logger
 from utils import list_to_dict
 
-#agent = Agent("models/model_67500.onnx", H=config["H"])
+agent = Agent("models/policy_V1.onnx", H=config["H"])
 env = Env(cfg=config)
 
 
@@ -27,8 +27,11 @@ for _ in range(config["init_duration_s"] * env.control_f):
     '''
 for _ in range(config["init_duration_s"] * env.control_f):
     obs, torque, q_des = env.step(action)
-    #action, estimate = agent(obs)
-    action = [0]*12
+    action, estimate = agent(obs)
+
+    #Use when debugging:
+    #action = [0]*12
+
     #print("estimate: ", estimate)
     '''
     log.log(
@@ -45,8 +48,11 @@ for _ in range(config["init_duration_s"] * env.control_f):
 env.update_command([1.0, 0.0, 0.0])
 for _ in range(config["sim_duration_s"] * env.control_f):
     obs, torque, q_des = env.step(action)
-    #action, estimate = agent(obs)
-    action = [0]*12
+    action, estimate = agent(obs)
+
+    #Use when debugging:
+    #action = [0]*12
+
     #print("estimate: ", estimate)
     '''
     log.log(
