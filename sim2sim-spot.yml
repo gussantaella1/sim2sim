@@ -1,0 +1,7 @@
+name: sim2sim-spot
+channels:
+  - http://conda.anaconda.org/gurobi
+  - robostack
+  - conda-forge
+  - defaults
+prefix: /Users/gussantaella/miniforge3/envs/sim2sim-spot
