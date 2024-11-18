@@ -241,17 +241,20 @@ class Env:
         # return torque
 
     def get_obs(self) -> list:
+
         obs = []
-        # Projected gravity
-        _, ori = self.client.getBasePositionAndOrientation(self.robot)
-        obs += self.quat_rot_inv(ori, [0, 0, -1])
-        # Velocity Command
-        obs += self.command_generator()
 
         # Linear and Angular Velocity (Add Missing Terms)
         vel_lin, vel_ang = self.client.getBaseVelocity(self.robot)
         obs += vel_lin  # Linear velocity (3 terms)
         obs += vel_ang  # Angular velocity (3 terms)
+
+
+        # Projected gravity
+        _, ori = self.client.getBasePositionAndOrientation(self.robot)
+        obs += self.quat_rot_inv(ori, [0, 0, -1])
+        # Velocity Command
+        obs += self.command_generator()
 
         # Joint Pose and Velocity
         states = self.client.getJointStates(

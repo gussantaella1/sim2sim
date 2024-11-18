@@ -8,18 +8,18 @@ class Agent:
         # Load onnx policy
         self.ort_session = ort.InferenceSession(policy)
         # Set up history tracking
-        self.proj_g = np.zeros((3, H), dtype=np.float32)
-        self.vel_cmd = np.zeros((3, H), dtype=np.float32)
         self.lin_vel = np.zeros((3, H), dtype=np.float32)  # Linear velocity
         self.ang_vel = np.zeros((3, H), dtype=np.float32)  # Angular velocity
+        self.proj_g = np.zeros((3, H), dtype=np.float32)
+        self.vel_cmd = np.zeros((3, H), dtype=np.float32)
         self.q = np.zeros((12, H), dtype=np.float32)
         self.dq = np.zeros((12, H), dtype=np.float32)
         self.last_action = np.zeros((12, H), dtype=np.float32)
         self.obs_list = [
-            self.proj_g,
-            self.vel_cmd,
             self.lin_vel,  # Include linear velocity
             self.ang_vel,  # Include angular velocity
+            self.proj_g,
+            self.vel_cmd,
             self.q,
             self.dq,
             self.last_action
