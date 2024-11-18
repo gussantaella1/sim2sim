@@ -3,8 +3,17 @@ from config import config
 from env import Env
 from plot import Logger
 from utils import list_to_dict
+#import onnx
 
-agent = Agent("models/policy_V1.onnx", H=config["H"])
+
+#agent = Agent("models/policy_V1.onnx", H=config["H"])
+
+#model = onnx.load("models/policy_V1.onnx")
+#print(onnx.helper.printable_graph(model.graph))
+
+agent = Agent("models/policy_V1.onnx", H=50)
+
+#print("Config H: ", config["H"])
 env = Env(cfg=config)
 
 
@@ -27,7 +36,10 @@ for _ in range(config["init_duration_s"] * env.control_f):
     '''
 for _ in range(config["init_duration_s"] * env.control_f):
     obs, torque, q_des = env.step(action)
-    action, estimate = agent(obs)
+    print("Length of obs:", len(obs))
+
+    #action, estimate = agent(obs)
+    action = agent(obs)
 
     #Use when debugging:
     #action = [0]*12
@@ -48,7 +60,8 @@ for _ in range(config["init_duration_s"] * env.control_f):
 env.update_command([1.0, 0.0, 0.0])
 for _ in range(config["sim_duration_s"] * env.control_f):
     obs, torque, q_des = env.step(action)
-    action, estimate = agent(obs)
+    #action, estimate = agent(obs)
+    action = agent(obs)
 
     #Use when debugging:
     #action = [0]*12

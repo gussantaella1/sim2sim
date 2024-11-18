@@ -247,6 +247,12 @@ class Env:
         obs += self.quat_rot_inv(ori, [0, 0, -1])
         # Velocity Command
         obs += self.command_generator()
+
+        # Linear and Angular Velocity (Add Missing Terms)
+        vel_lin, vel_ang = self.client.getBaseVelocity(self.robot)
+        obs += vel_lin  # Linear velocity (3 terms)
+        obs += vel_ang  # Angular velocity (3 terms)
+
         # Joint Pose and Velocity
         states = self.client.getJointStates(
             self.robot,
