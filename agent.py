@@ -4,7 +4,7 @@ import onnxruntime as ort
 
 class Agent:
     def __init__(self, policy: str, H: int = 50) -> None:
-        print("G is being overwritten check: ", H)
+        #print("G is being overwritten check: ", H)
         # Load onnx policy
         self.ort_session = ort.InferenceSession(policy)
         # Set up history tracking
@@ -25,17 +25,17 @@ class Agent:
             self.last_action
         ]
         self.sizes = [obs.shape[0] for obs in self.obs_list]
-        print("Sizes as defined here: ", self.sizes)
+        #print("Sizes as defined here: ", self.sizes)
         self.H = H
-        print("H as defined here: ", self.H)
+        #print("H as defined here: ", self.H)
 
     def __call__(self, obs: list) -> np.ndarray:
         obs_hist = self.get_flat_obs(obs)
-        print("Shape of obs_hist:", obs_hist.shape)
+        #print("Shape of obs_hist:", obs_hist.shape)
         #OG:
-        #outputs = self.ort_session.run(None, {"obs": obs_hist})
-        outputs = self.ort_session.run(None, {"state_distory": obs_hist})
-        print("Model outputs:", outputs)
+        outputs = self.ort_session.run(None, {"obs": obs_hist})
+        #outputs = self.ort_session.run(None, {"state_distory": obs_hist})
+        #print("Model outputs:", outputs)
 
         action = outputs[0].flatten()
 
@@ -51,12 +51,12 @@ class Agent:
         Converts the input observation into a flat array with full history.
         """
         idx = 0
-        print("self.sizes prior to sum: ", self.sizes)
-        print("self.H in obs.flat:", self.H )
-        print("sum(self.sizes):", sum(self.sizes) )
+        #print("self.sizes prior to sum: ", self.sizes)
+        #print("self.H in obs.flat:", self.H )
+        #print("sum(self.sizes):", sum(self.sizes) )
 
         obs_flat = np.zeros((1, self.H * sum(self.sizes)), dtype=np.float32)
-        print("Initialized obs_flat shape:", obs_flat.shape)
+        #print("Initialized obs_flat shape:", obs_flat.shape)
 
         for i in range(len(self.obs_list)):
             ob, size = self.obs_list[i], self.sizes[i]
@@ -69,7 +69,7 @@ class Agent:
             self.obs_list[i] = ob  # Save updated buffer
             idx += size
 
-        print("obs_flat shape:", obs_flat.shape)  # Debugging shape
+        #print("obs_flat shape:", obs_flat.shape)  # Debugging shape
         return np.float32(obs_flat)
 
 

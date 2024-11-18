@@ -11,7 +11,7 @@ from utils import list_to_dict
 #model = onnx.load("models/policy_V1.onnx")
 #print(onnx.helper.printable_graph(model.graph))
 
-agent = Agent("models/policy_V1.onnx", H=50)
+agent = Agent("models/policy_V2.onnx", H=50)
 
 #print("Config H: ", config["H"])
 env = Env(cfg=config)
@@ -36,7 +36,7 @@ for _ in range(config["init_duration_s"] * env.control_f):
     '''
 for _ in range(config["init_duration_s"] * env.control_f):
     obs, torque, q_des = env.step(action)
-    print("Length of obs:", len(obs))
+    #print("Length of obs:", len(obs))
 
     #action, estimate = agent(obs)
     action = agent(obs)
