@@ -1,18 +1,19 @@
 config = {
-    "H": 1,
+    "H": 50,
     "sim_f": 200,  # [Hz]
     "control_f": 50,  # [Hz]
     "command": [0, 0, 0],  # [vy, vy, yaw_rate]
     "Kp": 120, # Might want to change this to 120
+    "Kp": 60, # Might want to change this to 120
     "Kd": 1.5, 
     "Ka": 0.2,
     "tau_lim": 45,  # [Nm]
     "saturation_lim": 45,
     "vel_lim": 30,
-    "lateral_friction": 1, #0.8,
-    "rolling_friction": 1, #0.6,
+    "lateral_friction": 0.4, #0.8, was 1
+    "rolling_friction": 0.4, #0.6, was 1
     "init_duration_s": 1,
-    "sim_duration_s": 15,
+    "sim_duration_s": 12,
     "Kp_joints": {
         "fr.hx": 120,
         "fl.hx": 120,

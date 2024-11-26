@@ -96,6 +96,10 @@ class Env:
         # assert False
         self.links["trunk"] = -1
         self.joints_isaac = cfg["isaac_joint_order"]
+
+        #self.q = {joint: [] for joint in self.joints_isaac.keys()}
+
+
         self.q_init = cfg["q_stance"]
         #print(self.q_init.keys())
         #print(self.joints.keys())
