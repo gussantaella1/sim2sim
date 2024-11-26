@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-            
+#OG naming convention for joints:        
 #"FR_hip_joint": [],
 #"FL_hip_joint": [],
 #"RR_hip_joint": [],
@@ -188,26 +188,26 @@ class Logger:
         # Joint Position
         for k, v in self.q.items():
             c = styles[k.split(".")[0].lower()]
-            if "hip" in k:
-                self.ax_q[0].plot(self.t, v, c, label=k.split("_joint")[0])
+            if "hx" in k:
+                self.ax_q[0].plot(self.t, v, c, label=k)
                 self.ax_q[0].legend(loc="upper right")
-            elif "thigh" in k:
-                self.ax_q[1].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "hy" in k:
+                self.ax_q[1].plot(self.t, v, c, label=k)
                 self.ax_q[1].legend(loc="upper right")
-            elif "calf" in k:
-                self.ax_q[2].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "kn" in k:
+                self.ax_q[2].plot(self.t, v, c, label=k)
                 self.ax_q[2].legend(loc="upper right")
         # Desired
         for k, v in self.q_des.items():
             c = styles[k.split(".")[0].lower()] + "--"
-            if "hip" in k:
-                self.ax_q[0].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
+            if "hx" in k:
+                self.ax_q[0].plot(self.t, v, c, label=k + "_des")
                 self.ax_q[0].legend(loc="upper right")
-            elif "thigh" in k:
-                self.ax_q[1].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
+            elif "hy" in k:
+                self.ax_q[1].plot(self.t, v, c, label=k + "_des")
                 self.ax_q[1].legend(loc="upper right")
-            elif "calf" in k:
-                self.ax_q[2].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
+            elif "kn" in k:
+                self.ax_q[2].plot(self.t, v, c, label=k + "_des")
                 self.ax_q[2].legend(loc="upper right")
         self.ax_q[0].set_title("Joint Position")
         self.ax_q[1].set_ylabel("Angle [rad]")
@@ -215,14 +215,14 @@ class Logger:
         # Joint Velocity
         for k, v in self.dq.items():
             c = styles[k.split(".")[0].lower()]
-            if "hip" in k:
-                self.ax_dq[0].plot(self.t, v, c, label=k.split("_joint")[0])
+            if "hx" in k:
+                self.ax_dq[0].plot(self.t, v, c, label=k)
                 self.ax_dq[0].legend(loc="upper right")
-            elif "thigh" in k:
-                self.ax_dq[1].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "hy" in k:
+                self.ax_dq[1].plot(self.t, v, c, label=k)
                 self.ax_dq[1].legend(loc="upper right")
-            elif "calf" in k:
-                self.ax_dq[2].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "kn" in k:
+                self.ax_dq[2].plot(self.t, v, c, label=k)
                 self.ax_dq[2].legend(loc="upper right")
         self.ax_dq[0].set_title("Joint Velocity")
         self.ax_dq[1].set_ylabel("Angular Rate [rad/s]")
@@ -230,14 +230,14 @@ class Logger:
         # Action
         for k, v in self.action.items():
             c = styles[k.split(".")[0].lower()]
-            if "hip" in k:
-                self.ax_action[0].plot(self.t, v, c, label=k.split("_joint")[0])
+            if "hx" in k:
+                self.ax_action[0].plot(self.t, v, c, label=k)
                 self.ax_action[0].legend(loc="upper right")
-            elif "thigh" in k:
-                self.ax_action[1].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "hy" in k:
+                self.ax_action[1].plot(self.t, v, c, label=k)
                 self.ax_action[1].legend(loc="upper right")
-            elif "calf" in k:
-                self.ax_action[2].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "kn" in k:
+                self.ax_action[2].plot(self.t, v, c, label=k)
                 self.ax_action[2].legend(loc="upper right")
         self.ax_action[0].set_title("Action")
         self.ax_action[1].set_ylabel("Angle Offset [rad]")
@@ -245,14 +245,14 @@ class Logger:
         # Torque
         for k, v in self.torque.items():
             c = styles[k.split(".")[0].lower()]
-            if "hip" in k:
-                self.ax_torque[0].plot(self.t, v, c, label=k.split("_joint")[0])
+            if "hx" in k:
+                self.ax_torque[0].plot(self.t, v, c, label=k)
                 self.ax_torque[0].legend(loc="upper right")
-            elif "thigh" in k:
-                self.ax_torque[1].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "hy" in k:
+                self.ax_torque[1].plot(self.t, v, c, label=k)
                 self.ax_torque[1].legend(loc="upper right")
-            elif "calf" in k:
-                self.ax_torque[2].plot(self.t, v, c, label=k.split("_joint")[0])
+            elif "kn" in k:
+                self.ax_torque[2].plot(self.t, v, c, label=k)
                 self.ax_torque[2].legend(loc="upper right")
         self.ax_torque[0].set_title("Applied Torque")
         self.ax_torque[1].set_ylabel("Torque [Nm]")
