@@ -14,8 +14,6 @@ from utils import list_to_dict
 agent = Agent("models/policy_V2.onnx", H = config["H"])
 
 #agent = Agent("models/policy_V1.onnx", H = 50)
-
-#print("Config H: ", config["H"])
 env = Env(cfg=config)
 
 
@@ -48,7 +46,6 @@ for _ in range(config["init_duration_s"] * env.control_f):
         torque=list_to_dict(torque, env.joints_isaac),
         q_des=list_to_dict(q_des, env.joints_isaac),
     )
-
     
     '''
     log.log(
@@ -85,6 +82,19 @@ for _ in range(config["init_duration_s"] * env.control_f):
         torque=list_to_dict(torque, env.joints_isaac),
         q_des=list_to_dict(q_des, env.joints_isaac),
     )
+
+    '''
+    print("\nInput to logger:")
+    print(f"  proj_g (Projected Gravity):  {obs[6:9]}")
+    print(f"  vel_cmd (Velocity Command):  {obs[9:12]}")
+    print(f"  q (Joint Positions):\n    {list_to_dict(obs[12:24], env.joints_isaac)}")
+    print(f"  dq (Joint Velocities):\n    {list_to_dict(obs[24:36], env.joints_isaac)}")
+    print(f"  action (Actions):\n    {list_to_dict(action, env.joints_isaac)}")
+    print(f"  q_offset (Joint Offsets):\n    {env.q_init}")
+    print(f"  torque (Torques):\n    {list_to_dict(torque, env.joints_isaac)}")
+    print(f"  q_des (Desired Positions):\n    {list_to_dict(q_des, env.joints_isaac)}")
+    '''
+
     '''
     log.log(
         proj_g=obs[0:3],
@@ -133,5 +143,12 @@ for _ in range(config["sim_duration_s"] * env.control_f):
         q_des=list_to_dict(q_des, env.joints_isaac),
     )
     '''
-log.plot()
+
+
+try:
+    print("Attempting to plot...")
+    log.plot()
+except Exception as e:
+    print(f"Error during plot: {e}")
+
 env.close()
