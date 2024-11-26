@@ -166,10 +166,10 @@ class Logger:
 
     def plot(self) -> None:
         styles = {
-            "FR": "b",  # "tab:blue",
-            "FL": "g",  # "tab:orange",
-            "RR": "r",  # "tab:green",
-            "RL": "m",  # "tab:red",
+            "fr": "b",  # "tab:blue",
+            "fl": "g",  # "tab:orange",
+            "hr": "r",  # "tab:green",
+            "hl": "m",  # "tab:red",
         }
         # Projected Gravity
         for k, v in self.proj_g.items():
@@ -187,7 +187,7 @@ class Logger:
         self.ax_vel_cmd.set_xlabel("Time [s]")
         # Joint Position
         for k, v in self.q.items():
-            c = styles[k.split("_")[0]]
+            c = styles[k.split(".")[0].lower()]
             if "hip" in k:
                 self.ax_q[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_q[0].legend(loc="upper right")
@@ -199,7 +199,7 @@ class Logger:
                 self.ax_q[2].legend(loc="upper right")
         # Desired
         for k, v in self.q_des.items():
-            c = styles[k.split("_")[0]] + "--"
+            c = styles[k.split(".")[0].lower()] + "--"
             if "hip" in k:
                 self.ax_q[0].plot(self.t, v, c, label=k.split("_joint")[0]+"_des")
                 self.ax_q[0].legend(loc="upper right")
@@ -214,7 +214,7 @@ class Logger:
         self.ax_q[2].set_xlabel("Time [s]")
         # Joint Velocity
         for k, v in self.dq.items():
-            c = styles[k.split("_")[0]]
+            c = styles[k.split(".")[0].lower()]
             if "hip" in k:
                 self.ax_dq[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_dq[0].legend(loc="upper right")
@@ -229,7 +229,7 @@ class Logger:
         self.ax_dq[2].set_xlabel("Time [s]")
         # Action
         for k, v in self.action.items():
-            c = styles[k.split("_")[0]]
+            c = styles[k.split(".")[0].lower()]
             if "hip" in k:
                 self.ax_action[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_action[0].legend(loc="upper right")
@@ -244,7 +244,7 @@ class Logger:
         self.ax_action[2].set_xlabel("Time [s]")
         # Torque
         for k, v in self.torque.items():
-            c = styles[k.split("_")[0]]
+            c = styles[k.split(".")[0].lower()]
             if "hip" in k:
                 self.ax_torque[0].plot(self.t, v, c, label=k.split("_joint")[0])
                 self.ax_torque[0].legend(loc="upper right")
