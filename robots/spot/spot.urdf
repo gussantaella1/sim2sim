@@ -115,6 +115,11 @@
         <sphere radius="0.035"/>
       </geometry>
     </collision>
+    <inertial>
+      <origin xyz="0.0 0.0 0.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.200"/>
+    </inertial>
   </link>
 
   <joint name="fl.ank" type="fixed">
@@ -207,6 +212,11 @@
         <sphere radius="0.035"/>
       </geometry>
     </collision>
+    <inertial>
+      <origin xyz="0.0 0.0 0.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.200"/>
+    </inertial>
   </link>
 
   <joint name="fr.ank" type="fixed">
@@ -298,6 +308,11 @@
         <sphere radius="0.035"/>
       </geometry>
     </collision>
+    <inertial>
+      <origin xyz="0.0 0.0 0.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.200"/>
+    </inertial>
   </link>
 
   <joint name="hl.ank" type="fixed">
@@ -390,6 +405,11 @@
         <sphere radius="0.035"/>
       </geometry>
     </collision>
+    <inertial>
+      <origin xyz="0.0 0.0 0.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <mass value="0.200"/>
+    </inertial>
   </link>
 
   <joint name="hr.ank" type="fixed">

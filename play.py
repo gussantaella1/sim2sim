@@ -32,10 +32,9 @@ log = Logger(Ka=config["Ka"], f=config["control_f"])
 
 action = [0 for _ in range(env.n)]
 for _ in range(config["init_duration_s"] * env.control_f):
+
     obs, torque, q_des = env.step_init()
-
-
-    
+    '''
     log.log(
         proj_g=obs[6:9],
         vel_cmd=obs[9:12],
@@ -46,7 +45,7 @@ for _ in range(config["init_duration_s"] * env.control_f):
         torque=list_to_dict(torque, env.joints_isaac),
         q_des=list_to_dict(q_des, env.joints_isaac),
     )
-    
+    '''
     '''
     log.log(
         proj_g=obs[0:3],
@@ -71,7 +70,7 @@ for _ in range(config["init_duration_s"] * env.control_f):
     #action = [0]*12
 
     #print("estimate: ", estimate)
-
+    '''
     log.log(
         proj_g=obs[6:9],
         vel_cmd=obs[9:12],
@@ -82,6 +81,7 @@ for _ in range(config["init_duration_s"] * env.control_f):
         torque=list_to_dict(torque, env.joints_isaac),
         q_des=list_to_dict(q_des, env.joints_isaac),
     )
+    '''
 
     '''
     print("\nInput to logger:")

@@ -159,7 +159,9 @@ class Logger:
     ) -> None:
         # Time
         self.t.append(self.counter * self.dt)
+
         self.counter += 1
+        
         # Projected Gravity
         self.proj_g["gx"].append(proj_g[0])
         self.proj_g["gy"].append(proj_g[1])
@@ -185,7 +187,7 @@ class Logger:
 
         
     def plot(self) -> None:
-        print("STARTING MY COOL PLOTS")
+        #print("STARTING MY COOL PLOTS")
 
         # Define a directory to save the plots
         output_dir = "plots"
@@ -241,13 +243,13 @@ class Logger:
         # Joint Position
         for k, v in self.q.items():
 
-            print("Here for the thousand time!")
+            #print("Here for the thousand time!")
             c = styles[k.split("_")[0]]
 
             # Check types and lengths
-            print(f"Key: {k}")
-            print(f"Time vector type: {type(self.t)}, element types: {[type(t) for t in self.t[:5]]}")
-            print(f"Data vector type: {type(v)}, element types: {[type(val) for val in v[:5]]}")
+            #print(f"Key: {k}")
+            #print(f"Time vector type: {type(self.t)}, element types: {[type(t) for t in self.t[:5]]}")
+            #print(f"Data vector type: {type(v)}, element types: {[type(val) for val in v[:5]]}")
             
 
             #try:
@@ -349,4 +351,4 @@ class Logger:
         self.fig_torque.savefig(os.path.join(output_dir, "torque.png"))
 
         print(f"Plots saved in the directory: {output_dir}")
-        plt.show()
+        #plt.show()
